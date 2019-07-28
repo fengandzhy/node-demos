@@ -8,7 +8,7 @@ http.createServer(function(request,response){
         var tea = new teacher(1,'a',20);
         tea.enter();
         tea.teach(response);
-        response.end();
+        response.end('end');
     }
 }).listen(8000);
 console.log('server is running is at 8000');
