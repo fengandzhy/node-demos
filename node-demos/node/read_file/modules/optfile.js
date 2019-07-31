@@ -17,11 +17,18 @@ module.exports ={
         //         //response.write(data);
         //     }
         // });
-        test(path,function(){
-            sleep(5000);
-            console.log('abcdef');
-        });
-        // response.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+
+
+        /**
+         * 这只是一个普通函数，所以这不会异步执行
+         * */
+        // test(path,function(){
+        //     sleep(5000);
+        //     response.write('abcdefg');
+        //     console.log('abcdef');
+        // });
+
 
         console.log("异步方法执行完毕");
     }
