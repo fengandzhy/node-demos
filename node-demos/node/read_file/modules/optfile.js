@@ -63,12 +63,12 @@ module.exports ={
 //     b();
 // }
 //
-// function sleep(n) {
-//     var start = new Date().getTime();
-//     //  console.log('休眠前：' + start);
-//     while (true) {
-//         if (new Date().getTime() - start > n) {
-//             break;
-//         }
-//     }
-// }
+function sleep(n) {
+    var start = new Date().getTime();
+    //  console.log('休眠前：' + start);
+    while (true) {
+        if (new Date().getTime() - start > n) {
+            break;
+        }
+    }
+}
