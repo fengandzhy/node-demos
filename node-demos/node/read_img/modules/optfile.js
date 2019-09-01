@@ -12,6 +12,18 @@ module.exports ={
                 response.end();
             }
         });
+    },
+    readfile:function(path,response){
+        fs.readFile(path,function(err,data){
+            if(err){
+                console.log(err);
+            }else{
+                console.log(data.toString());
+                response.write(data);
+                response.end();
+            }
+        });
+        console.log("异步方法执行完毕");
     }
 }
 
