@@ -30,5 +30,3 @@ http.createServer(function(request,response){
     }
 }).listen(8000);
 console.log('server is running is at 8000');
-
-
