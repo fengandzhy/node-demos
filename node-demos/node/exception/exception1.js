@@ -6,7 +6,6 @@ http.createServer(function(request,response){
 
         try{
             data = exception.expfun(0);
-
         }catch(err){
             console.log(err);
             response.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
