@@ -1,16 +1,17 @@
 var async = require('async');
 
 /**
- * 如果这个one发生错误,那么后面的two就不会执行了
+ * 当这个one发生错误时,这个two的执行结果就不会出来了，除非就是two在one发生错误前就结束
+ *
  * */
 function exec(){
-    async.series({
+    async.parallel({
         one:function(done){
             var index =0;
             setInterval(function(){
                 console.log('aaa='+new Date());
                 index++;
-                if(index==3){
+                if(index==6){
                     clearInterval(this);
                     done('a','one finished');
                 }
