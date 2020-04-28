@@ -1,4 +1,8 @@
 
+
+/**
+ * 注意setInterval(function(){},1000) 的意思是，在主程序完成之后，过1000毫秒之后，将执行function
+ * */
 function oneFun(){
     var index =0;
     setInterval(function(){

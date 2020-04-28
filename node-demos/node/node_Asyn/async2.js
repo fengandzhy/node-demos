@@ -12,7 +12,7 @@ function exec(){
                 index++;
                 if(index==3){
                     clearInterval(this);
-                    done('a','one finished');
+                    done(null,'one finished'); //这里如果不写null就表示有错误
                 }
             },1000);
         },

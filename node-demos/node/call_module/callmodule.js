@@ -1,10 +1,15 @@
+
+/**
+ *
+ * */
 var http = require('http');
-var user = require('./User');
+var stu = require('./Student');
 var teacher = require('./Teacher');
 http.createServer(function(request,response){
 
     response.writeHead(200,{'Content-Type':'text/html;charset=utf-8'});
     if(request.url!=='/favicon.ico'){
+        console.log(stu);
         var tea = new teacher(1,'a',20);
         tea.enter();
         tea.teach(response);

@@ -33,6 +33,7 @@ connection.query(selectsql,function(err,rs,fields){
         console.log('[query]-:'+err);
         return;
     }
+    console.log(fields);
     for(var i=0;i<rs.length;i++){
         console.log(rs[i].username);
     }
