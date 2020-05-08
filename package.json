@@ -1,0 +1,26 @@
+{
+  "name": "demos",
+  "version": "1.0.0",
+  "description": "A repository about NodeJS and relevant frameworks such as Express and KOA",
+  "main": "index.js",
+  "dependencies": {
+    "chokidar": "^3.4.0",
+    "jquery": "^3.5.0",
+    "loadsh": "^0.0.4",
+    "mysql": "^2.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fengandzhy/node-demos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fengandzhy/node-demos/issues"
+  },
+  "homepage": "https://github.com/fengandzhy/node-demos#readme"
+}

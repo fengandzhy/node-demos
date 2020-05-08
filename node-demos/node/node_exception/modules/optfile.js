@@ -6,7 +6,7 @@ module.exports ={
     readFileSync:function(path){
         var data = fs.readFileSync(path,'utf-8');
         console.log(data);
-        console.log('finish reading the file');
+        console.log('finish reading the fs');
         return data;
     },
 
@@ -17,7 +17,7 @@ module.exports ={
         fs.readFile(path,function(err,data){
             if(err){
                 console.log(err);
-                recall('file not exists!');
+                recall('fs not exists!');
             }else{
                 console.log(data.toString());
                 recall(data);

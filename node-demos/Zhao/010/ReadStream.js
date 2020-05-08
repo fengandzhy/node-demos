@@ -13,7 +13,7 @@ readStream.on('data',function(chunk){
 
 //没有更多的数据可读时触发
 readStream.on('end',function(){
-    console.log('Read file is finished!');
+    console.log('Read fs is finished!');
     console.log(data.toString());
 });
 
