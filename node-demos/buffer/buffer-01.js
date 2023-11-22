@@ -5,6 +5,7 @@
 let buffer1 = Buffer.alloc(10);
 console.log(buffer1);
 
+// 这种方式并不安全原因是会带有内存数据的
 let buffer2 = Buffer.allocUnsafe(1000);
 console.log(buffer2);
 
