@@ -12,4 +12,10 @@ console.log(buffer2);
 let buf_3 = Buffer.from('hello');
 let buf_4 = Buffer.from([105, 108, 111, 118, 101, 121, 111, 117]);
 console.log(buf_3);
-console.log(buf_4);
+console.log(buf_4); // 这里展示的是16进制的数字
+
+for(let i = 0; i  < buf_4.length; i++){
+    console.log(buf_4[i]); // 这里展示的是10进制的数字
+}
+// buf_4.push(3);
+// console.log(buf_4);
