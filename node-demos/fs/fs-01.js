@@ -11,7 +11,7 @@ const fs = require('fs');
  * options 选项设置 （可选）
  * callback 写入回调
  *
- *
+ * 这是个异步写入过程
  * */
 fs.writeFile('./座右铭.txt','三人行，必有我师矣.', err=>{
     if(err){
@@ -20,3 +20,5 @@ fs.writeFile('./座右铭.txt','三人行，必有我师矣.', err=>{
     }
     console.log('写入成功.');
 });
+
+console.log('执行到这里了');
