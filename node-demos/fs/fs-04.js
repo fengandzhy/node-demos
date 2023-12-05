@@ -3,6 +3,7 @@
  * */
 const fs = require('fs');
 
-fs.appendFileSync('./data.txt', '我来了');
+// \r\n表示换行
+fs.appendFileSync('./data.txt', '\r\n我来了');
 
 console.log('执行到这里了.');
