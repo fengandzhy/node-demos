@@ -1,6 +1,9 @@
 
+/**
+ * 递归创建文件夹
+ * */
+const fs = require('fs');
 
-//递归创建文件
 fs.mkdir('./a/b/c',{recursive: true}, err => {
     if (err) {
         console.log(err);
@@ -8,3 +11,6 @@ fs.mkdir('./a/b/c',{recursive: true}, err => {
     }
     console.log('创建成功.');
 });
+
+// 同步方式
+// fs.mkdirSync('./a/b/c', {recursive: true});
