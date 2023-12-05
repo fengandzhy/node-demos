@@ -11,3 +11,7 @@ fs.rm('./a', {recursive: true}, err => {
     }
     console.log('删除成功.');
 });
+
+// 同步递归删除文件夹
+// fs.rmSync('./a', {recursive: true});
+
