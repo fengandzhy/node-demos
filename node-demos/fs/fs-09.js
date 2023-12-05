@@ -10,4 +10,5 @@ rs.on('data', chunk => {
    ws.write(chunk);
 });
 
-rs.pipe(ws);
+// 还可以用这种方法把读入流的数据直接写入到写入流中去
+// rs.pipe(ws);
