@@ -1,5 +1,5 @@
 /**
- * 文件读取
+ * 异步文件读取
  * */
 const fs = require('fs');
 fs.readFile('./观书有感.txt', (err, data) => {
