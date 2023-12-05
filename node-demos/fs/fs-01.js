@@ -21,3 +21,14 @@ fs.writeFile('./座右铭.txt', '三人行，必有我师矣.', err => {
 });
 
 console.log('执行到这里了');
+
+/**
+ * 对于这里加上配置项 {flag:'a'} 也能实现文件的追加写入, 注意这里只能是 {flag: 'a'}, 不能是别的值, 不能是别的属性
+ * */
+fs.writeFile('./座右铭.txt', '三人行，必有我师矣.',{flag:'a'}, err => {
+    if (err) {
+        console.log("写入失败.");
+        return;
+    }
+    console.log('写入成功.');
+});
