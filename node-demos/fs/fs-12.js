@@ -12,13 +12,8 @@ const fs = require('fs');
 //     console.log('创建成功.');
 // });
 
+// 同步创建文件夹
+// fs.mkdirSync('./html');
 
-// 递归创建文件
-fs.mkdir('./a/b/c',{recursive: true}, err => {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log('创建成功.');
-});
+
 
