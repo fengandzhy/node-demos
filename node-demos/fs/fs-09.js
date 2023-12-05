@@ -10,4 +10,4 @@ rs.on('data', chunk => {
    ws.write(chunk);
 });
 
-
+rs.pipe(ws);
