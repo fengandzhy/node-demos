@@ -3,6 +3,7 @@
  * */
 const fs = require('fs');
 
+// 读取到文件流
 const rs = fs.createReadStream('./孙文.jpg');
 
 // 必须绑定data事件, 才能取到所读数据
