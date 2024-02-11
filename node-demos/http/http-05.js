@@ -1,5 +1,5 @@
 const http = require('http');
-const url = require('url');
+
 
 /**
  * 提取请求中的路径和查询字符串
@@ -10,6 +10,7 @@ const server = http.createServer((request, response) => {
     const pathname = url.pathname;
     console.log(pathname);
 
+    // url.searchParams 返回的是一个 URLSearchParams
     const params = {};
     url.searchParams.forEach((value,key) => {
         params[key] = value;
