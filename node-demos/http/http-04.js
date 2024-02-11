@@ -1,6 +1,9 @@
 const http = require('http');
 const url = require('url');
 
+/**
+ * 提取请求中的路径和查询字符串
+ * */
 const server = http.createServer((request, response) => {
     const res = url.parse(request.url, true);
     console.log(res);
