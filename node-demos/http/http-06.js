@@ -4,8 +4,8 @@ const http = require('http');
  * */
 const server = http.createServer((request, response) => {
     response.setHeader('content-type', 'text/html;charset=utf-8');
-    const url = new URL(request.url,'http://127.0.0.1');
-    // console.log(url);
+    console.log(request.url); // 这永远都是 /login 端口后面，参数前面的部分
+    const url = new URL(request.url,'http://127.0.0.1'); // 这是个对象
     const {pathname} = url;
 
     if(pathname == '/login'){
