@@ -16,7 +16,7 @@ const middleWare = (request, response, next) =>{
     next();
 }
 
-app.use(middleWare);
+app.use(middleWare); // 全局中间健在这里写
 
 app.get('/home', (request, response) => {
     response.send('网站首页');
