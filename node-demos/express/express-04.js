@@ -6,7 +6,6 @@ const app = exp();
  * 对于直接把参数写在路径上的方式, 就用这种方式来获取. request.params.id
  * */
 app.get('/singer/:id.html', (request, response) => {
-    console.log(request.params.id);
     const result = singers.find((item) => {
         return item.id === Number(request.params.id);
     });
