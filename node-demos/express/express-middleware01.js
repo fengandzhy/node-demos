@@ -12,7 +12,8 @@ const app = exp();
  * */
 const middleWare = (request, response, next) =>{
     let {url, ip} = request;
-    fs.appendFileSync(path.resolve(__dirname , './access.log'), `${url}  ${ip}\r\n`);
+    // fs.appendFileSync(path.resolve(__dirname , './access.log'), `${url}  ${ip}\r\n`);
+    fs.appendFileSync(path.resolve(__dirname , './access.log'), `\`${url}  ${ip}\r\n`);
     next();
 }
 
