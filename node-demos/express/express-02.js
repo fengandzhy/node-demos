@@ -5,9 +5,16 @@ const app = exp();
 // 创建路由
 app.get('/user/list', (request, response) => {
 
+    console.log(request.method);
+    console.log(request.url);
+    console.log(request.httpVersion);
+    console.log(request.headers);
+
     console.log(request.path); // 请求路径
     console.log(request.query);//获取查询字符串
     console.log(request.get('host')); // 获取指定的请求头
+
+    console.log(request.ip);
 
     response.end('Hello, Express'); // 如果不写response.end浏览器会一直不停地转
 });
