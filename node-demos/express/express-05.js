@@ -21,15 +21,15 @@ app.get('/request', (req, resp) => {
 
 
     //连贯操作
-    resp.status(404).set('xxx','yyy').send('你好朋友')
-    //3. 其他响应
-    resp.redirect('http://atguigu.com')//重定向
-    resp.download('./package.json');//下载响应
-    resp.json({
-        name: '尚硅谷',
-        slogon: '让天下没有难学的技术'
-    });//响应 JSON
-    resp.sendFile(__dirname + '/home.html') //响应文件内容
+    // resp.status(404).set('xxx','yyy').send('你好朋友')
+    // //3. 其他响应
+    // resp.redirect('http://atguigu.com')//重定向
+    // resp.download('./package.json');//下载响应
+    // resp.json({
+    //     name: '尚硅谷',
+    //     slogon: '让天下没有难学的技术'
+    // });//响应 JSON
+    // resp.sendFile(__dirname + '/home.html') //响应文件内容
 });
 
 app.listen(9000, () => {
