@@ -5,6 +5,7 @@ const app = exp();
 // 创建路由
 app.get('/user/list', (request, response) => {
 
+    console.log(request.path); // 请求路径
     console.log(request.query);//获取查询字符串
     console.log(request.get('host')); // 获取指定的请求头
 
