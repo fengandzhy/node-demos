@@ -7,11 +7,11 @@ const app = exp();
  * */
 app.get('/request', (request, response) => {
     //1. express 中设置响应的方式兼容 HTTP 模块的方式
-    res.statusCode = 404;
-    res.statusMessage = 'xxx';
-    res.setHeader('abc','xyz');
-    res.write('响应体');
-    res.end('xxx');
+    // res.statusCode = 404;
+    // res.statusMessage = 'xxx';
+    // res.setHeader('abc','xyz');
+    // res.write('响应体');
+    // res.end('xxx');
 
     //2. express 的响应方法
     res.status(500); //设置响应状态码
