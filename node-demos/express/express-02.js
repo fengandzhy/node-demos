@@ -2,6 +2,7 @@ const exp = require('express');
 
 const app = exp();
 
+// 创建路由
 app.get('/user/list', (request, response) => {
 
     console.log(request.query);//获取查询字符串
