@@ -4,6 +4,9 @@ const app = exp();
 
 /**
  * 对于直接把参数写在路径上的方式, 就用这种方式来获取. request.params.id
+ *
+ * :id/:base 就是一个路由参数
+ *
  * */
 app.get('/user/list/:id/:base', (request, response) => {
     console.log(request.params.id);
