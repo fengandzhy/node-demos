@@ -24,7 +24,10 @@ app.get('/request', (request, response) => {
     //3. 其他响应
     res.redirect('http://atguigu.com')//重定向
     res.download('./package.json');//下载响应
-    res.json();//响应 JSON
+    res.json({
+        name: '尚硅谷',
+        slogon: '让天下没有难学的技术'
+    });//响应 JSON
     res.sendFile(__dirname + '/home.html') //响应文件内容
 });
 
