@@ -32,7 +32,8 @@ router.post('/upload', (req, res) => {
 
     //服务器保存该图片的访问 URL
     // /images/8ad3d5e36012212ba7642c000.jpg
-    let url = '/images/' + files.portrait.newFilename;// 将来将此数据保存在数据库中
+    console.log(files.portrait[0]);
+    let url = '/images/' + files.portrait[0].newFilename;// 将来将此数据保存在数据库中
 
     res.send(url);
   });
