@@ -14,7 +14,10 @@ mongoose.connection.once('open', async () => {
     //5. 创建文档的结构对象
     //设置集合中文档的属性以及属性值的类型
     let BookSchema = new mongoose.Schema({
-        name: String,
+        name: {
+            type: String,
+            required: true // 该属性必须不能为空
+        },
         author: String,
         price: Number
     });
