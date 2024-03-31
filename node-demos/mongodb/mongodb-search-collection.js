@@ -23,7 +23,7 @@ mongoose.connection.once('open', async () => {
     let BookModel = mongoose.model('novel', BookSchema);
 
 
-    //7. 删除
+    //7. 查询
     try {
         const newBook = await BookModel.find({$and:[{price:{$gt:30}},{price:{$lt:70}}]});
         console.log(newBook);
