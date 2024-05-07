@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tile Calculator</title>
+<style>
+body {
+    font-family: "Gill Sans", sans-serif;
+    font-size: 16px;
+    text-align: center;
+    background-color: #f5f5f5;
+}
+
+.container {
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.label-version {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.label-version label {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+select, input[type="number"], button {
+    width: 70%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.result {
+    font-weight: bold;
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Tile Calculator</h2>
+    <label for="room">Room:</label>
+    <select id="room" onchange="toggleOptionalInputs()">
+        <option value="bathroom" selected>Bathroom</option>
+        <option value="kitchen">Kitchen or Living Room</option>
+    </select><br><br>
+    <div id="bathroomInputs">
+        <label for="floorLength">Floor Length (m):</label>
+        <input type="number" id="floorLength" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="floorWidth">Floor Width (m):</label>
+        <input type="number" id="floorWidth" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="ceilingHeight">Ceiling Height (m):</label>
+        <input type="number" id="ceilingHeight" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="windowWidth">Window Width (m):</label>
+        <input type="number" id="windowWidth" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="windowHeight">Window Height (m):</label>
+        <input type="number" id="windowHeight" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="doorWidth">Door Width (m):</label>
+        <input type="number" id="doorWidth" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="doorHeight">Door Height (m):</label>
+        <input type="number" id="doorHeight" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="floorWallSame">Floor and Wall Tiles Same?</label>
+        <select id="floorWallSame" onchange="calculateArea()">
+            <option value="yes" selected>Yes</option>
+            <option value="no">No</option>
+        </select><br><br>
+    </div>
+    <div id="otherRoomsInputs" style="display: none;">
+        <label for="otherFloorLength">Floor Length (m):</label>
+        <input type="number" id="otherFloorLength" step="0.01" required onchange="calculateArea()"><br><br>
+        <label for="otherFloorWidth">Floor Width (m):</label>
+        <input type="number" id="otherFloorWidth" step="0.01" required onchange="calculateArea()"><br><br>
+    </div>
+    <label for="wastage">Wastage Allowance:</label>
+    <select id="wastage" onchange="calculateArea()">
+        <option value="0">None</option>
+        <option value="0.1">10%</option>
+        <option value="0.15">15%</option>
+    </select><br><br>
+    <div id="squareMetersResult"></div><br>
+    <div id="totalFloorBoxesInput" style="display: none;">
+        <label for="floorTileBoxSize">Floor Tile Box Size (m<sup>2</sup>):</label>
+        <input type="number" id="floorTileBoxSize" step="0.01" required onchange="calculateTotalBoxes()">
+    </div>
+    <div id="totalWallBoxesInput" style="display: none;">
+        <label for="wallTileBoxSize">Wall Tile Box Size (m<sup>2</sup>):</label>
+        <input type="number" id="wallTileBoxSize" step="0.01" required onchange="calculateTotalBoxes()">
+    </div>
+    <div id="boxSizeInput" style="display: none;">
+        <label for="boxSize">Box Size (m<sup>2</sup>):</label>
+        <input type="number" id="boxSize" step="0.01" onchange="calculateBoxes()">
+    </div>    
+    <div id="totalSquareMetersResult"></div><br>
+    <div id="totalBoxesResult"></div><br>
+    <button onclick="refresh()">Refresh</button>
+</div>
+
+<script>
+function toggleOptionalInputs() {
+    var room = document.getElementById("room").value;
+    var bathroomInputs = document.getElementById("bathroomInputs");
+    var otherRoomsInputs = document.getElementById("otherRoomsInputs");
+    
+    if (room === "bathroom") {
+        bathroomInputs.style.display = "block";
+        otherRoomsInputs.style.display = "none";
+    } else {
+        bathroomInputs.style.display = "none";
+        otherRoomsInputs.style.display = "block";
+    }
+    calculateArea();
+}
+
+function calculateArea() {
+    var room = document.getElementById("room").value;
+    var floorLength = parseFloat(document.getElementById(room === "bathroom" ? "floorLength" : "otherFloorLength").value);
+    var floorWidth = parseFloat(document.getElementById(room === "bathroom" ? "floorWidth" : "otherFloorWidth").value);
+    var ceilingHeight = room === "bathroom" ? parseFloat(document.getElementById("ceilingHeight").value) : 0;
+    var wastagePercentage = parseFloat(document.getElementById("wastage").value);
+    var wastageFactor = 1 + wastagePercentage;
+
+    var floorArea = 0;
+    var wallArea = 0;
+    
+    // Show box size input based on selection
+    if (document.getElementById("floorWallSame").value === "yes") {
+        document.getElementById("boxSizeInput").style.display = "block";
+        document.getElementById("totalBoxesResult").style.display = "block";
+        document.getElementById("totalFloorBoxesInput").style.display = "none";
+        document.getElementById("totalWallBoxesInput").style.display = "none";
+        document.getElementById("totalSquareMetersResult").innerHTML = "";
+    } else {
+        document.getElementById("boxSizeInput").style.display = "none";
+        document.getElementById("totalBoxesResult").style.display = "none";
+    }
+
+    if (room === "bathroom" && document.getElementById("floorWallSame").value === "no") {
+        floorArea = floorWidth * floorLength * wastageFactor;
+        wallArea = ((floorLength + floorWidth) * 2 * ceilingHeight - (document.getElementById("doorWidth").value * document.getElementById("doorHeight").value) - (document.getElementById("windowWidth").value * document.getElementById("windowHeight").value)) * wastageFactor;
+        document.getElementById("squareMetersResult").innerHTML = "Floor Area: " + floorArea.toFixed(2) + " m<sup>2</sup><br>" +
+            "Wall Area: " + wallArea.toFixed(2) + " m<sup>2</sup>";
+        document.getElementById("totalFloorBoxesInput").style.display = "block";
+        document.getElementById("totalWallBoxesInput").style.display = "block";
+        calculateTotalBoxes(); // Calculate total boxes when floor area or wall area changes
+    } else {
+        var area = 0;
+        if (room === "bathroom" && document.getElementById("floorWallSame").value === "yes") {
+            area = ((floorWidth * floorLength) + ((floorLength + floorWidth) * 2 * ceilingHeight - (document.getElementById("doorWidth").value * document.getElementById("doorHeight").value) - (document.getElementById("windowWidth").value * document.getElementById("windowHeight").value))) * wastageFactor;
+        } else {
+            area = floorLength * floorWidth * wastageFactor;
+        }
+
+        // If floor and wall tiles are the same and a box size is provided, calculate total boxes
+        // if (document.getElementById("floorWallSame").value === "yes" && document.getElementById("boxSize").value !== "") {
+        //     // document.getElementById("squareMetersResult").innerHTML = "Total Square Meters (with " + (wastagePercentage * 100) + "% wastage): " + area.toFixed(2) + " m<sup>2</sup>";
+        //     // document.getElementById("totalFloorBoxesInput").style.display = "none";
+        //     // document.getElementById("totalWallBoxesInput").style.display = "none";
+        //     // document.getElementById("totalBoxesResult").innerHTML = "";
+        //     console.log(document.getElementById("boxSize").value);
+        //     calculateBoxes();
+        // } else {
+        //     document.getElementById("squareMetersResult").innerHTML = "Total Square Meters (with " + (wastagePercentage * 100) + "% wastage): " + area.toFixed(2) + " m<sup>2</sup>";
+        //     document.getElementById("totalFloorBoxesInput").style.display = "none";
+        //     document.getElementById("totalWallBoxesInput").style.display = "none";
+        //     document.getElementById("totalBoxesResult").innerHTML = ""; // Clear total boxes result
+        // }
+        if (document.getElementById("floorWallSame").value === "yes" || room === "kitchen" ) {
+            document.getElementById("squareMetersResult").innerHTML = "Total Square Meters (with " + (wastagePercentage * 100) + "% wastage): " + area.toFixed(2) + " m<sup>2</sup>";
+            document.getElementById("totalFloorBoxesInput").style.display = "none";
+            document.getElementById("totalWallBoxesInput").style.display = "none";
+            document.getElementById("totalBoxesResult").innerHTML = "";
+            document.getElementById("totalSquareMetersResult").innerHTML = "";
+            document.getElementById("boxSizeInput").style.display = "block";
+            document.getElementById("boxSizeInput").value = "";
+            document.getElementById("totalBoxesResult").style.display = "block";
+            calculateBoxes();
+        }
+
+
+    }
+}
+
+function calculateTotalBoxes() {
+    var floorArea = parseFloat(document.getElementById("floorLength").value) * parseFloat(document.getElementById("floorWidth").value);
+    var wallArea = ((parseFloat(document.getElementById("floorLength").value) + parseFloat(document.getElementById("floorWidth").value)) * 2 * parseFloat(document.getElementById("ceilingHeight").value)) - (parseFloat(document.getElementById("doorWidth").value) * parseFloat(document.getElementById("doorHeight").value)) - (parseFloat(document.getElementById("windowWidth").value) * parseFloat(document.getElementById("windowHeight").value));
+    var floorTileBoxSize = parseFloat(document.getElementById("floorTileBoxSize").value);
+    var wallTileBoxSize = parseFloat(document.getElementById("wallTileBoxSize").value);
+    var wastagePercentage = parseFloat(document.getElementById("wastage").value);
+    var wastageFactor = 1 + wastagePercentage;
+
+    var totalFloorBoxes = Math.ceil((floorArea * wastageFactor) / floorTileBoxSize);
+    var totalWallBoxes = Math.ceil((wallArea * wastageFactor) / wallTileBoxSize);
+
+    // Round up total square meters to full boxes
+    var totalFloorSquareMeters = Math.ceil(totalFloorBoxes) * floorTileBoxSize;
+    var totalWallSquareMeters = Math.ceil(totalWallBoxes) * wallTileBoxSize;
+
+    document.getElementById("totalSquareMetersResult").innerHTML = "Total Floor Tile Boxes Needed: " + totalFloorBoxes + " (Total Square Meters: " + totalFloorSquareMeters.toFixed(2) + " m<sup>2</sup>)<br>Total Wall Tile Boxes Needed: " + totalWallBoxes + " (Total Square Meters: " + totalWallSquareMeters.toFixed(2) + " m<sup>2</sup>)";
+}
+
+function calculateBoxes() {
+    var totalSquareMeters = parseFloat(document.getElementById("squareMetersResult").textContent.split(" ")[6]);
+    var boxSize = parseFloat(document.getElementById("boxSize").value);
+    var totalBoxes = Math.ceil(totalSquareMeters / boxSize);
+    const totalSquare =  totalBoxes * boxSize;
+    document.getElementById("totalBoxesResult").innerHTML = "Total Boxes Needed: " + totalBoxes + "(Total Square Meters: " + totalSquare.toFixed(2) + ")";
+}
+
+function refresh() {
+    document.getElementById("room").value = "bathroom";
+    document.getElementById("floorLength").value = "";
+    document.getElementById("floorWidth").value = "";
+    document.getElementById("ceilingHeight").value = "";
+
+    document.getElementById("windowWidth").value = "";
+    document.getElementById("windowHeight").value = "";
+    document.getElementById("doorWidth").value = "";
+    document.getElementById("doorHeight").value = "";
+    document.getElementById("boxSize").value = "";
+    document.getElementById("floorTileBoxSize").value = "";
+    document.getElementById("wallTileBoxSize").value = "";
+
+    document.getElementById("otherFloorLength").value = "";
+    document.getElementById("otherFloorWidth").value = "";
+    document.getElementById("wastage").value = "0";
+    document.getElementById("squareMetersResult").innerHTML = "";
+    document.getElementById("totalSquareMetersResult").innerHTML = "";
+    document.getElementById("totalBoxesResult").innerHTML = "";
+    var room = document.getElementById("room").value;
+    var bathroomInputs = document.getElementById("bathroomInputs");
+    var otherRoomsInputs = document.getElementById("otherRoomsInputs");
+
+    if (room === "bathroom") {
+        bathroomInputs.style.display = "block";
+        otherRoomsInputs.style.display = "none";
+    } else {
+        bathroomInputs.style.display = "none";
+        otherRoomsInputs.style.display = "block";
+    }
+}
+</script>
+
+</body>
+</html>
